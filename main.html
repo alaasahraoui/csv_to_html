@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Read CSV</title>
+	<script type="text/javascript" src="papaparse.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+	 
+</head>
+<body>
+	<input type="file" id="upload-csv" accept=".csv">
+	<button id="btn-upload-csv">Read CSV</button>
+	<table id="tbl-data">
+		
+	</table>
+	<br>
+	<button id="btn"  >+++</button>
+	<br>
+	<h1 id="h1">
+
+	</h1><br>
+	<p id="answer"></p>
+	<script type="text/javascript">
+
+ 
+
+Papa.parse('url_1.csv', {
+  header: true,
+  download: true,
+  dynamicTyping: true,
+
+  complete: function(results) {
+	 
+	
+	var $button = $('#btn');
+
+  let i=0;
+  document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
+  document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;
+  console.log(results.data[i]);
+$button.click(function(){
+	
+	i++;
+	document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
+	document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;
+});
+
+
+
+
+  }
+ 
+}
+
+);
+ 
+
+ 
+
+ 
+	</script>
+</body>
+
+</html>
