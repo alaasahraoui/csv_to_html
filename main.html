@@ -14,7 +14,8 @@
 		
 	</table>
 	<br>
-	<button id="btn"  >+++</button>
+	<button id="previous" > <==</button>
+	<button id="next" >==></button>
 	<br>
 	<h1 id="h1">
 
@@ -32,20 +33,29 @@ Papa.parse('url_1.csv', {
   complete: function(results) {
 	 
 	
-	var $button = $('#btn');
+	 
 
   let i=0;
+  console.log(results.data[i]);
   document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
   document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;
-  console.log(results.data[i]);
-$button.click(function(){
-	
+ 
+  var $button = $('#next');
+  $button.click(function(){
 	i++;
+	console.log(results.data[i]);
 	document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
-	document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;
-});
+	document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;});
 
 
+
+	var $button2 = $('#previous');
+  $button2.click(function(){
+	   if(i<0){alert('sorry no previous data available ');}else{ 
+	i--;
+	console.log(results.data[i]);
+	document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
+	document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;  }});
 
 
   }
@@ -55,7 +65,26 @@ $button.click(function(){
 );
  
 
- 
+ function next_page(i,results){
+var $button = $('#next');
+  $button.click(function(){
+	i++;
+	console.log(results.data[i]);
+	document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
+	document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;});
+}
+
+function previous_page(i,results){
+var $button2 = $('#previous');
+  $button2.click(function(){
+	i--;
+	console.log(results.data[i]);
+	document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
+	document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;});
+}
+
+	
+
 
  
 	</script>
