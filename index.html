@@ -1,16 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<style>
+
+ 
+
+</style>
+ 
+
 	<title>Read CSV</title>
-	<script type="text/javascript" src="papaparse.min.js"></script>
+ 
+ 	<script type="text/javascript" src="papaparse.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 <body>
 	<input type="file" id="upload-csv" accept=".csv">
 	<button id="btn-upload-csv">Read CSV</button>
-	<table id="tbl-data">
-		
-	</table>
+ <br>
+ <br>
+ <br>
+ <div id="test">    <input placeholder="write the page number" type="number" id="myInput">
+    
+ <br>
+ <button id="previous" > <==</button>
+ <button id="next" >==></button>
+ <button type="button" id="myBtn">show Value</button></div>
+ <br>
+ <h1 id="h1">
+
+ </h1><br>
+
+ <p id="answer"></p>
+
+
 	<script type="text/javascript">
+	  var $button = $('#next');
+	  var $button2 = $('#previous');
 		let btn_upload = document.getElementById('btn-upload-csv').addEventListener('click', ()=> {
 
 			Papa.parse(document.getElementById('upload-csv').files[0], {
@@ -18,43 +44,59 @@
 				header: true,
 				complete: function(results) {
 					console.log(results);
-					/*
-					let i = 0;
-					results.data.map((data, index)=> {
-						if (i === 0) {
-							let table = document.getElementById('tbl-data');
-							generateTableHead(table, data);
-						} else {
-							let table = document.getElementById('tbl-data');
-							generateTableRows(table, data);
-						}
-						i++;
-					});
-					*/
-				}
+					 
+   let i=0;
+
+
+  console.log(results.data[i]);
+  document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
+  document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;
+ 
+  var $button = $('#next');
+  $button.click(function(){
+	i++;
+	console.log(results.data[i]);
+	document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
+	document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;});
+
+
+
+	var $button2 = $('#previous');
+  $button2.click(function(){
+	   if(i<0){alert('sorry no previous data available ');}else{ 
+	i--;
+	console.log(results.data[i]);
+	document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
+	document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;  }});
+					 
+				
+
+
+	$(document).ready(function(){
+		// Get value on button click and show alert
+		$("#myBtn").click(function(){
+			var str = $("#myInput").val();
+		 
+			i=parseInt(str)-1;
+	console.log(results.data[i]);
+	document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
+	document.getElementById("answer").innerHTML =results.data[i].outer_html_answer; 
+			 
+		});
+	});
+
+
+}
 			});
 		});
 
-		function generateTableHead(table, data) {
-			let thead = table.createTHead();
-			let row = thead.insertRow();
-			for(let key of data) {
-				let th = document.createElement('th');
-				let text = document.createTextNode(key);
-				th.appendChild(text);
-				row.appendChild(th);
-			}
-		}
-
-		function generateTableRows(table, data) {
-			let newRow = table.insertRow(-1);
-			data.map((row, index)=> {
-				let newCell = newRow.insertCell();
-				let newText = document.createTextNode(row);
-				newCell.appendChild(newText);
-			});
-		}
+ 
 	</script>
+
+ 
+<script>
+
+</script>
 </body>
 
 </html>
