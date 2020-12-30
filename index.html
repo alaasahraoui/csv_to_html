@@ -1,38 +1,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<style>
-
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
  
-
-</style>
  
 
 	<title>Read CSV</title>
- 
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
  	<script type="text/javascript" src="papaparse.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://kit.fontawesome.com/88cf4f8afd.js" crossorigin="anonymous"></script>
 </head>
 <body>
-	<input type="file" id="upload-csv" accept=".csv">
-	<button id="btn-upload-csv">Read CSV</button>
- <br>
- <br>
- <br>
- <div id="test">    <input placeholder="write the page number" type="number" id="myInput">
-    
- <br>
- <button id="previous" > <==</button>
- <button id="next" >==></button>
- <button type="button" id="myBtn">show Value</button></div>
- <br>
- <h1 id="h1">
+	<div class="alert alert-dark" role="alert">
+		  <a id="Page_URL" href="#" class="alert-link"></a>
+	  </div>
+	<div class="container">
+		<div class="row">
+		  <div class="col">
+		 
+		  </div>
+		  <div class="col-6">
+			<div class="input-group  ">
+				<input    id="upload-csv" accept=".csv" type="file" class="form-control" id="inputGroupFile04"  aria-label="Upload">
+				<button class="btn btn-dark" type="button"  id="btn-upload-csv">Read CSV</button>
+				
+			  </div>
+		  </div>
+		  <div class="col">
+		 
+		  </div>
+		</div>
+<!-- Row  2  -->
+<br>
+		<div class="row">
+			<div class="col">
+		 
+			</div>
+			<div class="col-6">
+				<div class="input-group  d-flex justify-content-center ">
+					<input    placeholder="write the page number" type="number" id="myInput">
+					<button class="btn btn-dark" style="margin-right: 10px;" type="button" id="myBtn">Show value</button>
+					<button class="btn btn-light"   id="previous" ><i class="fa fa-2x   fa-long-arrow-alt-left"></i></button>
+					<button class="btn btn-dark" 	   id="next" ><i class="fa fa-2x   fa-long-arrow-alt-right"></i></button>
+			 
+			
+						<br>
+			 
+					</div>
+			</div>
+			<div class="col">
+			 
+			</div>
+		  </div>
+		  <!-- ROW 3 DATA print  -->
 
- </h1><br>
+		  <div class="row">
+			<div class="col">
+			 
+				<br>
+				
+				<p id="answer"></p>
+			</div>
+			<div class="col-md-auto">
+				<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+					
+					<div class="card-header" >Chapter And Page<h5 id="h1"></h5></div>
+					<div class="card-body">
+					  <h5 class="card-title" id="book_title" >book title </h5>
+					  
+					  
+					</div>
+				  </div>
+			</div>
+ 
+		  </div>
+		</div>
+ 
 
- <p id="answer"></p>
+ <!-- container div  -->
+	  </div>
 
+ 
+ 
+ 
+	 
+
+  </div>
+	<!-- ROW 2  -->
+ 
+ 
+	 
+ 
+
+
+		
+	<!-- ************************ -->
+ <!--  html  content  -->
+
+ 
+<!-- end html content  -->
 
 	<script type="text/javascript">
 	  var $button = $('#next');
@@ -51,11 +120,17 @@
   console.log(results.data[i]);
   document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
   document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;
+  document.getElementById("book_title").innerHTML =results.data[i].Field2;
+  document.getElementById("Page_URL").innerHTML =results.data[i].Page_URL;
+  document.getElementById("Page_URL").href="Page_URL"; 
  
   var $button = $('#next');
   $button.click(function(){
 	i++;
 	console.log(results.data[i]);
+	document.getElementById("Page_URL").innerHTML =results.data[i].Page_URL;
+	document.getElementById("Page_URL").href="Page_URL"; 
+
 	document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
 	document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;});
 
@@ -66,6 +141,9 @@
 	   if(i<0){alert('sorry no previous data available ');}else{ 
 	i--;
 	console.log(results.data[i]);
+	document.getElementById("Page_URL").href=results.data[i].Page_URL 
+	document.getElementById("Page_URL").innerHTML =results.data[i].Page_URL;
+
 	document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
 	document.getElementById("answer").innerHTML =results.data[i].outer_html_answer;  }});
 					 
@@ -79,6 +157,11 @@
 		 
 			i=parseInt(str)-1;
 	console.log(results.data[i]);
+
+	document.getElementById("Page_URL").href=results.data[i].Page_URL 
+	document.getElementById("Page_URL").innerHTML =results.data[i].Page_URL;
+
+	
 	document.getElementById("h1").innerHTML =results.data[i].chapterAndPage;
 	document.getElementById("answer").innerHTML =results.data[i].outer_html_answer; 
 			 
